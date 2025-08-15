@@ -20,11 +20,12 @@ public class TokenService {
     try {
       var algorithm = Algorithm.HMAC256(secret);
 
-      return JWT.create()
-                .withIssuer("auth-spring-api")
-                .withSubject(user.getEmail())
-                .withExpiresAt(generateExpirationDate())
-                .sign(algorithm);
+      return JWT
+        .create()
+        .withIssuer("auth-spring-api")
+        .withSubject(user.getEmail())
+        .withExpiresAt(generateExpirationDate())
+        .sign(algorithm);
     } catch (JWTCreationException exception) {
       throw new RuntimeException("Error while authenticating.");
     } catch (IllegalArgumentException exception) {
@@ -36,11 +37,12 @@ public class TokenService {
     try {
       var algorithm = Algorithm.HMAC256(secret);
 
-      return JWT.require(algorithm)
-                .withIssuer("auth-spring-api")
-                .build()
-                .verify(token)
-                .getSubject();
+      return JWT
+        .require(algorithm)
+        .withIssuer("auth-spring-api")
+        .build()
+        .verify(token)
+        .getSubject();
     } catch (JWTVerificationException exception) {
       return null;
     }
